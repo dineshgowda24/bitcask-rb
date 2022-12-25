@@ -44,8 +44,6 @@ module Bitcask
             return header[0], header[1], header[2]
         end
     
-        private
-    
         def crc32_offset
             CRC32_SIZE
         end
