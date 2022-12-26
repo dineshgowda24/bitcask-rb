@@ -4,12 +4,15 @@ require 'zlib'
 
 module Bitcask
   module Serializer
-    # tz, keysz, valuesz, keytype, valuetype
-    # 3, 2 - 32, 16 bit unsigned long int with little endian byte order
+    # epoc, keysz, valuesz, key_type, value_type
+    # | 4B | 4B | 4B | 2B | 2B |
+    # 16 Bytes
+    # L< unsiged 32 bit int with little endian byte order
+    # S< unsiged 12 bit int with little endian byte order
     HEADER_FORMAT = 'L<L<L<S<S<'
     HEADER_SIZE = 16
 
-    # 32 bit unsigned long int
+    # 8 bit unsigned long int, endiness is not required as its a single byte
     CRC32_FORMAT = 'L'
     CRC32_SIZE = 4
 
@@ -26,8 +29,10 @@ module Bitcask
     }.freeze
 
     TYPES_FORMAT = {
-      TYPES['Integer'] => 'q<', # 64 bit signed long int
-      TYPES['Float'] => 'E' # 64 bit double
+      # 64 bit signed long int with little endian byte order
+      TYPES['Integer'] => 'q<'
+      # 64 bit double with little endian byte order
+      TYPES['Float'] => 'E'
     }.freeze
 
     def serialize(epoc:, key:, value:)
