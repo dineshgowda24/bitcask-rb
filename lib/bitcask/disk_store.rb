@@ -34,7 +34,7 @@ module Bitcask
     end
 
     def put(key, value)
-      size, data = serialize(epoc: Time.now.to_i, key:, value:)
+      size, data = serialize(epoc: Time.now.to_i, key: key, value: value)
 
       @key_dir[key] = key_struct(@write_pos, size, key)
       persist(data)
@@ -72,23 +72,29 @@ module Bitcask
     end
 
     def key_struct(write_pos, size, key)
-      OpenStruct.new(write_pos:, size:, key:)
+      OpenStruct.new(write_pos: write_pos, size: size, key: key)
     end
 
     def init_key_dir
       while (crc_and_header = @db_fh.read(crc32_header_offset))
 
         header = crc_and_header[crc32_offset..]
-        epoc, keysz, valuesz = deserialize_header(header)
+        epoc, keysz, valuesz, key_type, value_type = deserialize_header(header)
 
-        key = @db_fh.read(keysz)
-        value = @db_fh.read(valuesz)
+        key_raw = @db_fh.read(keysz)
+        value_raw = @db_fh.read(valuesz)
+
+        key_type = TYPES_LOOK_UP[key_type]
+        value_type = TYPES_LOOK_UP[value_type]
+
+        key = unpack(key_raw, key_type)
+        value = unpack(value_raw, value_type)
 
         crc = crc_and_header[..crc32_offset - 1]
-        raise Error('file corrupted') unless validate_crc32(desearlize_crc32(crc), header + key + value)
+        raise Exception.new('file corrupted') unless validate_crc32(desearlize_crc32(crc), header + key_raw + value_raw)
 
         size = crc32_header_offset + keysz + valuesz
-        @key_dir[key] = OpenStruct.new(write_pos: @write_pos, size:, key:)
+        @key_dir[key] = OpenStruct.new(write_pos: @write_pos, size: size, key: key)
         incr_write_pos(size)
       end
     end
