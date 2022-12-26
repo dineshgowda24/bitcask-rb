@@ -1,12 +1,13 @@
 # bitcask-rb : A Log-Structured Hash Table for Fast Key/Value Data
 
-[![Ruby Style Guide](https://img.shields.io/badge/code%20style-rubocop-brightgreen)](https://github.com/rubocop/rubocop)
 [![Ruby](https://img.shields.io/badge/ruby-3.1.1-brightgreen)](https://www.ruby-lang.org/en/)
+[![BDD](https://img.shields.io/badge/rspec-3.1-green)](https://rspec.info/)
+[![Ruby Style Guide](https://img.shields.io/badge/code%20style-rubocop-red)](https://github.com/rubocop/rubocop)
 
 
 Fast, Persistant key/value store based on [bitcask paper](https://riak.com/assets/bitcask-intro.pdf) written in Ruby.
-An attempt to understand and build our persitant kv store abd this in anyway is not intended for production.
-Few specifications from the paper are intentionally ignore for the same of simiplicity.
+An attempt to understand and build our persitant key/value store. This in anyway is not intended for production.
+Few specifications from the paper are intentionally ignored for the same of simiplicity.
 
 ## Prerequists
 
@@ -39,6 +40,12 @@ db_store.keys
 db_store.store
 ```
 
+## Tests
+
+```shell
+rspec
+```
+
 ## Benchmarks
 
 ```shell
@@ -54,3 +61,18 @@ DiskStore#get : 1M records                          10.434109  48.766160  59.200
 avg_put:                                             0.000044   0.000057   0.000101 (  0.000103)s
 avg_get:                                             0.000010   0.000044   0.000054 (  0.000063)s
 ```
+
+## Features
+
+| Feature                               | Support            |
+|---------------------------------------|--------------------|
+| Persisted                             | :white_check_mark: |
+| Get API                               | :white_check_mark: |
+| Put API                               | :white_check_mark: |
+| string data types for k/v             | :white_check_mark: |
+| CRC                                   | :white_check_mark: |
+| int, float, hash, array for k/v       | :x:                |
+| Directory Support                     | :x:                |
+| Delete API                            | :x:                |
+| File Merge                            | :x:                |
+| LSM Trees                             | :x:                |
