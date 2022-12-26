@@ -70,9 +70,8 @@ avg_get:                                             0.000010   0.000044   0.000
 | Persistant                            | :white_check_mark: |
 | Get API                               | :white_check_mark: |
 | Put API                               | :white_check_mark: |
-| string data types for k/v             | :white_check_mark: |
+| int, float and string types for k/v   | :white_check_mark: |
 | CRC                                   | :white_check_mark: |
-| int, float, hash, array for k/v       | :x:                |
 | Directory Support                     | :x:                |
 | Delete API                            | :x:                |
 | File Merge                            | :x:                |
