@@ -6,8 +6,8 @@
 
 
 Fast, Persistant key/value store based on [bitcask paper](https://riak.com/assets/bitcask-intro.pdf) written in Ruby.
-An attempt to understand and build our persitant key/value store. This in anyway is not intended for production.
-Few specifications from the paper are intentionally ignored for the same of simiplicity.
+An attempt to understand and build our persistent key/value store. This, in any way, is not intended for production.
+Few specifications from the paper are intentionally ignored for the sake of simplicity.
 
 ## Prerequists
 
@@ -66,7 +66,7 @@ avg_get:                                             0.000010   0.000044   0.000
 
 | Feature                               | Support            |
 |---------------------------------------|--------------------|
-| Persisted                             | :white_check_mark: |
+| Persistant                            | :white_check_mark: |
 | Get API                               | :white_check_mark: |
 | Put API                               | :white_check_mark: |
 | string data types for k/v             | :white_check_mark: |
