@@ -3,6 +3,7 @@
 [![Ruby](https://img.shields.io/badge/ruby-3.1.1-brightgreen)](https://www.ruby-lang.org/en/)
 [![BDD](https://img.shields.io/badge/rspec-3.1-green)](https://rspec.info/)
 [![Ruby Style Guide](https://img.shields.io/badge/code%20style-rubocop-red)](https://github.com/rubocop/rubocop)
+[![codecov](https://codecov.io/gh/dineshgowda24/bitcask-rb/branch/main/graph/badge.svg?token=HY8IQSEKCA)](https://codecov.io/gh/dineshgowda24/bitcask-rb)
 
 <img src="image.png"/>
 
