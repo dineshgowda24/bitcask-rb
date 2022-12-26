@@ -47,5 +47,5 @@ RSpec.configure do |config|
 end
 
 def db_fixture_file_path
-  'spec/fixtures/1672042848_bitcask.db'
+  'spec/fixtures/1672070284_bitcask.db'
 end
