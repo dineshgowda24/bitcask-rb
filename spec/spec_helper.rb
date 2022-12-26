@@ -16,7 +16,9 @@
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  formatter SimpleCov::Formatter::SimpleFormatter if ENV['CI']
+end
 
 require 'bitcask'
 require 'byebug'
