@@ -13,7 +13,7 @@ jobs:
           command: bundle install
       - run:
           name: Run tests and collect coverage
-          command: bundle rspec
+          command: bundle exec rspec
       - codecov/upload
 
 workflow:
