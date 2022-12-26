@@ -16,8 +16,10 @@
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
+require 'simplecov-cobertura'
+
 SimpleCov.start do
-  formatter SimpleCov::Formatter::SimpleFormatter if ENV['CI']
+  formatter SimpleCov::Formatter::CoberturaFormatter if ENV['CI']
 end
 
 require 'bitcask'
