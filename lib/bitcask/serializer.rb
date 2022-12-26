@@ -14,20 +14,20 @@ module Bitcask
     CRC32_SIZE = 4
 
     TYPES = {
-      "Integer" => 1,
-      "Float" => 2,
-      "String" => 3
+      'Integer' => 1,
+      'Float' => 2,
+      'String' => 3
     }.freeze
 
     TYPES_LOOK_UP = {
-      TYPES["Integer"] => "Integer",
-      TYPES["Float"] => "Float",
-      TYPES["String"] => "String"
+      TYPES['Integer'] => 'Integer',
+      TYPES['Float'] => 'Float',
+      TYPES['String'] => 'String'
     }.freeze
 
     TYPES_FORMAT = {
-      TYPES["Integer"] => 'q<', # 64 bit signed long int
-      TYPES["Float"] => 'E' # 64 bit double
+      TYPES['Integer'] => 'q<', # 64 bit signed long int
+      TYPES['Float'] => 'E' # 64 bit double
     }.freeze
 
     def serialize(epoc:, key:, value:)
@@ -37,7 +37,8 @@ module Bitcask
       key_raw = pack(key, key_type)
       value_raw = pack(value, value_type)
 
-      header = serialize_header(epoc: epoc, keysz: key_raw.length, key_type: key_type, value_type: value_type, valuesz: value_raw.length)
+      header = serialize_header(epoc: epoc, keysz: key_raw.length, key_type: key_type, value_type: value_type,
+                                valuesz: value_raw.length)
       data = key_raw + value_raw
 
       [crc32_header_offset + data.length, crc32(header + data) + header + data]
@@ -100,25 +101,24 @@ module Bitcask
 
     def pack(attribute, attribute_type)
       case attribute_type
-      when "Integer", "Float"
+      when 'Integer', 'Float'
         [attribute].pack(TYPES_FORMAT[TYPES[attribute_type]])
-      when "String"
+      when 'String'
         attribute.encode('utf-8')
       else
-        raise Exception.new('Invalid attribute_type')
+        raise StandardError, 'Invalid attribute_type'
       end
     end
 
     def unpack(attribute, attribute_type)
       case attribute_type
-      when "Integer", "Float"
-        attribute.unpack(TYPES_FORMAT[TYPES[attribute_type]])[0]
-      when "String"
+      when 'Integer', 'Float'
+        attribute.unpack1(TYPES_FORMAT[TYPES[attribute_type]])
+      when 'String'
         attribute
       else
-        raise Exception.new('Invalid attribute_type')
+        raise StandardError, 'Invalid attribute_type'
       end
     end
-
   end
 end

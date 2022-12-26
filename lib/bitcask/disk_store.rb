@@ -91,7 +91,8 @@ module Bitcask
         value = unpack(value_raw, value_type)
 
         crc = crc_and_header[..crc32_offset - 1]
-        raise Exception.new('file corrupted') unless validate_crc32(desearlize_crc32(crc), header + key_raw + value_raw)
+        raise StandardError, 'file corrupted' unless validate_crc32(desearlize_crc32(crc),
+                                                                    header + key_raw + value_raw)
 
         size = crc32_header_offset + keysz + valuesz
         @key_dir[key] = OpenStruct.new(write_pos: @write_pos, size: size, key: key)

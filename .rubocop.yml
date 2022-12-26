@@ -70,3 +70,6 @@ Style/BlockDelimiters:
   Exclude:
     - spec/factories/**
     - Gemfile
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: never
