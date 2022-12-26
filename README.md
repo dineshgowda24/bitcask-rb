@@ -4,6 +4,7 @@
 [![BDD](https://img.shields.io/badge/rspec-3.1-green)](https://rspec.info/)
 [![Ruby Style Guide](https://img.shields.io/badge/code%20style-rubocop-red)](https://github.com/rubocop/rubocop)
 
+<img src="image.png"/>
 
 Fast, Persistant key/value store based on [bitcask paper](https://riak.com/assets/bitcask-intro.pdf) written in Ruby.
 An attempt to understand and build our persistent key/value store. This, in any way, is not intended for production.
