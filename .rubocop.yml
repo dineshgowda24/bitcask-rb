@@ -1,0 +1,72 @@
+require:
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - vendor/**/*
+    - bin/**
+  TargetRubyVersion: 3.1.1
+
+RSpec:
+  Enabled: true # enable rubocop-rspec cops
+
+Bundler/OrderedGems:
+  Enabled: true
+
+Layout/ArrayAlignment:
+  EnforcedStyle: with_first_element
+  Enabled: true
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_first_argument
+  Enabled: true
+
+Layout/ClassStructure:
+  Enabled: true
+  ExpectedOrder:
+    - module_inclusion
+    - constants
+    - initializer
+    - public_methods
+    - protected_methods
+    - private_methods
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: aligned
+  Enabled: true
+
+Layout/ParameterAlignment:
+  EnforcedStyle: with_first_parameter
+  Enabled: true
+
+RSpec/ExampleLength:
+  Max: 15
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+  Enabled: true
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 20
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: true
+  Max: 8
+
+Style/BlockDelimiters:
+  Enabled: true
+  EnforcedStyle: semantic
+  Exclude:
+    - spec/factories/**
+    - Gemfile
