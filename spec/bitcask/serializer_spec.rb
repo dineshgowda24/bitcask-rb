@@ -21,7 +21,7 @@ RSpec.describe Bitcask::Serializer do
 
   describe '#serialize_header' do
     it 'returns serialized header' do
-      data = subject.serialize_header(epoc: now, keysz: 10, valuesz: 20, key_type: 'Integer', value_type: 'Integer')
+      data = subject.serialize_header(epoc: now, keysz: 10, valuesz: 20, key_type: :Integer, value_type: :Integer)
 
       expect(data.length).to eq(header_size)
       expect(data).not_to be_empty

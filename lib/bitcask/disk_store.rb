@@ -27,18 +27,18 @@ module Bitcask
       return '' if key_struct.nil?
 
       @db_fh.seek(key_struct.write_pos)
-      raw = @db_fh.read(key_struct.size)
+      raw = @db_fh.read(key_struct.log_size)
       epoc, key, value = deserialize(raw)
 
       value
     end
 
     def put(key, value)
-      size, data = serialize(epoc: Time.now.to_i, key: key, value: value)
+      log_size, data = serialize(epoc: Time.now.to_i, key: key, value: value)
 
-      @key_dir[key] = key_struct(@write_pos, size, key)
+      @key_dir[key] = key_struct(@write_pos, log_size, key)
       persist(data)
-      incr_write_pos(size)
+      incr_write_pos(log_size)
 
       nil
     end
@@ -71,32 +71,32 @@ module Bitcask
       @write_pos += pos
     end
 
-    def key_struct(write_pos, size, key)
-      OpenStruct.new(write_pos: write_pos, size: size, key: key)
+    def key_struct(write_pos, log_size, key)
+      OpenStruct.new(write_pos: write_pos, log_size: log_size, key: key)
     end
 
     def init_key_dir
-      while (crc_and_header = @db_fh.read(crc32_header_offset))
+      while (crc_and_header_bytes = @db_fh.read(crc32_header_offset))
 
-        header = crc_and_header[crc32_offset..]
-        epoc, keysz, valuesz, key_type, value_type = deserialize_header(header)
+        header_bytes = crc_and_header_bytes[crc32_offset..]
+        epoc, keysz, valuesz, key_type, value_type = deserialize_header(header_bytes)
 
-        key_raw = @db_fh.read(keysz)
-        value_raw = @db_fh.read(valuesz)
+        key_bytes = @db_fh.read(keysz)
+        value_bytes = @db_fh.read(valuesz)
 
-        key_type = TYPES_LOOK_UP[key_type]
-        value_type = TYPES_LOOK_UP[value_type]
+        key_type = DATA_TYPE_LOOK_UP[key_type]
+        value_type = DATA_TYPE_LOOK_UP[value_type]
 
-        key = unpack(key_raw, key_type)
-        value = unpack(value_raw, value_type)
+        key = unpack(key_bytes, key_type)
+        value = unpack(value_bytes, value_type)
 
-        crc = crc_and_header[..crc32_offset - 1]
+        crc = crc_and_header_bytes[..crc32_offset - 1]
         raise StandardError, 'file corrupted' unless validate_crc32(desearlize_crc32(crc),
-                                                                    header + key_raw + value_raw)
+                                                                    header_bytes + key_bytes + value_bytes)
 
-        size = crc32_header_offset + keysz + valuesz
-        @key_dir[key] = OpenStruct.new(write_pos: @write_pos, size: size, key: key)
-        incr_write_pos(size)
+        log_size = crc32_header_offset + keysz + valuesz
+        @key_dir[key] = OpenStruct.new(write_pos: @write_pos, log_size: log_size, key: key)
+        incr_write_pos(log_size)
       end
     end
   end

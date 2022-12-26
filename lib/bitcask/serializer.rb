@@ -16,62 +16,62 @@ module Bitcask
     CRC32_FORMAT = 'L'
     CRC32_SIZE = 4
 
-    TYPES = {
-      'Integer' => 1,
-      'Float' => 2,
-      'String' => 3
+    DATA_TYPE = {
+      :Integer => 1,
+      :Float => 2,
+      :String => 3
     }.freeze
 
-    TYPES_LOOK_UP = {
-      TYPES['Integer'] => 'Integer',
-      TYPES['Float'] => 'Float',
-      TYPES['String'] => 'String'
+    DATA_TYPE_LOOK_UP = {
+      DATA_TYPE[:Integer] => :Integer,
+      DATA_TYPE[:Float] => :Float,
+      DATA_TYPE[:String] => :String
     }.freeze
 
-    TYPES_FORMAT = {
+    DATA_TYPE_FORMAT = {
       # 64 bit signed long int with little endian byte order
-      TYPES['Integer'] => 'q<'
+      DATA_TYPE[:Integer] => 'q<',
       # 64 bit double with little endian byte order
-      TYPES['Float'] => 'E'
+      DATA_TYPE[:Float] => 'E'
     }.freeze
 
     def serialize(epoc:, key:, value:)
-      key_type = key.class.to_s
-      value_type = value.class.to_s
+      key_type = type(key)
+      value_type = type(value)
 
-      key_raw = pack(key, key_type)
-      value_raw = pack(value, value_type)
+      key_bytes = pack(key, key_type)
+      value_bytes = pack(value, value_type)
 
-      header = serialize_header(epoc: epoc, keysz: key_raw.length, key_type: key_type, value_type: value_type,
-                                valuesz: value_raw.length)
-      data = key_raw + value_raw
+      header = serialize_header(epoc: epoc, keysz: key_bytes.length, key_type: key_type, value_type: value_type,
+                                valuesz: value_bytes.length)
+      data = key_bytes + value_bytes
 
       [crc32_header_offset + data.length, crc32(header + data) + header + data]
     end
 
     def deserialize(data)
-      raw_data = data[crc32_offset..]
-      crc_data = data[..crc32_offset - 1]
+      header_and_data_bytes = data[crc32_offset..]
+      crc_bytes = data[..crc32_offset - 1]
 
-      return 0, '', '' unless validate_crc32(desearlize_crc32(crc_data), raw_data)
+      return 0, '', '' unless validate_crc32(desearlize_crc32(crc_bytes), header_and_data_bytes)
 
-      header_data = data[crc32_offset..crc32_header_offset - 1]
-      epoc, keysz, valuesz, key_type, value_type = deserialize_header(header_data)
+      header_bytes = data[crc32_offset..crc32_header_offset - 1]
+      epoc, keysz, valuesz, key_type, value_type = deserialize_header(header_bytes)
 
-      key_type = TYPES_LOOK_UP[key_type]
-      value_type = TYPES_LOOK_UP[value_type]
+      key_type_sym = DATA_TYPE_LOOK_UP[key_type]
+      value_type_sym = DATA_TYPE_LOOK_UP[value_type]
 
-      key_raw = data[crc32_header_offset..crc32_header_offset + keysz - 1]
-      value_raw = data[crc32_header_offset + keysz..]
+      key_bytes = data[crc32_header_offset..crc32_header_offset + keysz - 1]
+      value_bytes = data[crc32_header_offset + keysz..]
 
-      key = unpack(key_raw, key_type)
-      value = unpack(value_raw, value_type)
+      key = unpack(key_bytes, key_type_sym)
+      value = unpack(value_bytes, value_type_sym)
 
       [epoc, key, value]
     end
 
     def serialize_header(epoc:, key_type:, keysz:, value_type:, valuesz:)
-      [epoc, keysz, valuesz, TYPES[key_type], TYPES[value_type]].pack(HEADER_FORMAT)
+      [epoc, keysz, valuesz, DATA_TYPE[key_type], DATA_TYPE[value_type]].pack(HEADER_FORMAT)
     end
 
     def deserialize_header(header_data)
@@ -92,38 +92,43 @@ module Bitcask
       crc32_offset + header_offset
     end
 
-    def crc32(raw_data)
-      [Zlib.crc32(raw_data)].pack(CRC32_FORMAT)
+    def crc32(data_bytes)
+      [Zlib.crc32(data_bytes)].pack(CRC32_FORMAT)
     end
 
-    def desearlize_crc32(crc_data)
-      crc_data.unpack1(CRC32_FORMAT)
+    def desearlize_crc32(crc)
+      crc.unpack1(CRC32_FORMAT)
     end
 
-    def validate_crc32(digest, data)
-      digest == Zlib.crc32(data)
+    def validate_crc32(digest, data_bytes)
+      digest == Zlib.crc32(data_bytes)
     end
 
     def pack(attribute, attribute_type)
       case attribute_type
-      when 'Integer', 'Float'
-        [attribute].pack(TYPES_FORMAT[TYPES[attribute_type]])
-      when 'String'
+      when :Integer, :Float
+        [attribute].pack(DATA_TYPE_FORMAT[DATA_TYPE[attribute_type]])
+      when :String
         attribute.encode('utf-8')
       else
-        raise StandardError, 'Invalid attribute_type'
+        raise StandardError, 'Invalid attribute_type for pack'
       end
     end
 
     def unpack(attribute, attribute_type)
       case attribute_type
-      when 'Integer', 'Float'
-        attribute.unpack1(TYPES_FORMAT[TYPES[attribute_type]])
-      when 'String'
+      when :Integer, :Float
+        attribute.unpack1(DATA_TYPE_FORMAT[DATA_TYPE[attribute_type]])
+      when :String
         attribute
       else
-        raise StandardError, 'Invalid attribute_type'
+        raise StandardError, 'Invalid attribute_type for unpack'
       end
     end
+
+    def type(attribute)
+      attribute.class.to_s.to_sym
+    end
+
   end
 end
