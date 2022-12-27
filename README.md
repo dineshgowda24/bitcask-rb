@@ -3,6 +3,7 @@
 [![Ruby](https://img.shields.io/badge/ruby-3.1.1-brightgreen)](https://www.ruby-lang.org/en/)
 [![BDD](https://img.shields.io/badge/rspec-3.1-green)](https://rspec.info/)
 [![Ruby Style Guide](https://img.shields.io/badge/code%20style-rubocop-red)](https://github.com/rubocop/rubocop)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/dineshgowda24/bitcask-rb/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/dineshgowda24/bitcask-rb/tree/main)
 [![codecov](https://codecov.io/gh/dineshgowda24/bitcask-rb/branch/main/graph/badge.svg?token=HY8IQSEKCA)](https://codecov.io/gh/dineshgowda24/bitcask-rb)
 [![DeepSource](https://deepsource.io/gh/dineshgowda24/bitcask-rb.svg/?label=active+issues&token=aISrLFG-Rwka_9MMiZixX_NT)](https://deepsource.io/gh/dineshgowda24/bitcask-rb/?ref=repository-badge)
 
@@ -81,3 +82,5 @@ avg_get:                                             0.000010   0.000044   0.000
 | Directory Support                     | :x:                |
 | Delete API                            | :x:                |
 | Files Merge and LSM Trees             | :x:                |
+
+[![CircleCI](https://dl.circleci.com/insights-snapshot/gh/dineshgowda24/bitcask-rb/main/workflow/badge.svg?window=30d)](https://app.circleci.com/insights/github/dineshgowda24/bitcask-rb/workflows/workflow/overview?branch=main&reporting-window=last-30-days&insights-snapshot=true)
