@@ -10,8 +10,7 @@
 <img src="image.png"/>
 
 Fast, Persistent key/value store based on [bitcask paper](https://riak.com/assets/bitcask-intro.pdf) written in Ruby.
-An attempt to understand and build our persistent key/value store. This, in any way, is not intended for production.
-Only some specifications from the paper are intentionally ignored for simplicity.
+An attempt to understand and build our persistent key/value store capable of storing data enormous than the RAM. This, in any way, is not intended for production. For simplicity, implementation has ignored a few specifications from the paper.
 
 ## Prerequisites
 
@@ -54,6 +53,29 @@ db_store.store
 bundle exec rspec
 ```
 
+## Advanatages
+
+- Simple yet powerful
+- Easy to use
+- Store data enormous than RAM
+- Data file is OS agnostic
+- Portable
+- Faster read/writes
+- Minimal dependecies
+
+## Features
+
+| Feature                               | Support            |
+|---------------------------------------|--------------------|
+| Persisted in disk                     | :white_check_mark: |
+| Get API                               | :white_check_mark: |
+| Put API                               | :white_check_mark: |
+| Int, Float and String for k/v         | :white_check_mark: |
+| CRC                                   | :white_check_mark: |
+| Directory Support                     | :x:                |
+| Delete API                            | :x:                |
+| Files Merge and LSM Trees             | :x:                |
+
 ## Benchmarks
 
 ```ruby
@@ -70,17 +92,8 @@ avg_put:                                             0.000044   0.000057   0.000
 avg_get:                                             0.000010   0.000044   0.000054 (  0.000063) s
 ```
 
-## Features
+## Contributing
 
-| Feature                               | Support            |
-|---------------------------------------|--------------------|
-| Persisted in disk                     | :white_check_mark: |
-| Get API                               | :white_check_mark: |
-| Put API                               | :white_check_mark: |
-| Int, Float and String for k/v         | :white_check_mark: |
-| CRC                                   | :white_check_mark: |
-| Directory Support                     | :x:                |
-| Delete API                            | :x:                |
-| Files Merge and LSM Trees             | :x:                |
+If you wish to contribute in any way, please fork the repo and raise a PR.
 
 [![CircleCI](https://dl.circleci.com/insights-snapshot/gh/dineshgowda24/bitcask-rb/main/workflow/badge.svg?window=30d)](https://app.circleci.com/insights/github/dineshgowda24/bitcask-rb/workflows/workflow/overview?branch=main&reporting-window=last-30-days&insights-snapshot=true)
