@@ -18,8 +18,8 @@ module Bitcask
     HEADER_FORMAT = 'L<L<L<S<S<'
     HEADER_SIZE = 16
 
-    # 8 bit unsigned long int, endiness is not required as its a single byte
-    CRC32_FORMAT = 'L'
+    # 32 bit unsigned long int with little endian byte order
+    CRC32_FORMAT = 'L<'
     CRC32_SIZE = 4
 
     DATA_TYPE = {
