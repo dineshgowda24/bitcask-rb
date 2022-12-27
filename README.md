@@ -23,7 +23,7 @@ Only some specifications from the paper are intentionally ignored for simplicity
 bundle install
 ```
 
-## Example
+## Usage
 
 ```ruby
 db_store = Bitcask::DiskStore.new('bitcask.db')
@@ -50,7 +50,7 @@ db_store.store
 ## Tests
 
 ```shell
-rspec
+bundle exec rspec
 ```
 
 ## Benchmarks
@@ -73,12 +73,11 @@ avg_get:                                             0.000010   0.000044   0.000
 
 | Feature                               | Support            |
 |---------------------------------------|--------------------|
-| Persistent                            | :white_check_mark: |
+| Persisted in disk                     | :white_check_mark: |
 | Get API                               | :white_check_mark: |
 | Put API                               | :white_check_mark: |
-| int, float and string types for k/v   | :white_check_mark: |
+| Int, Float and String for k/v         | :white_check_mark: |
 | CRC                                   | :white_check_mark: |
 | Directory Support                     | :x:                |
 | Delete API                            | :x:                |
-| File Merge                            | :x:                |
-| LSM Trees                             | :x:                |
+| Files Merge and LSM Trees             | :x:                |

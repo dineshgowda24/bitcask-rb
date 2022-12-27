@@ -3,9 +3,16 @@
 require 'ostruct'
 
 module Bitcask
+  ##
+  # This class represents a persistant store via a database file
   class DiskStore
     include Serializer
 
+    ##
+    # Creates a new store described by a database file
+    #
+    # If the file already exists, then contents of key_dir will be populated.
+    # A StandardError will be raised when the file is corrupted.
     def initialize(db_file = 'bitcask.db')
       @db_fh = File.open(db_file, 'a+b')
       @write_pos = 0
@@ -22,6 +29,11 @@ module Bitcask
       put(key, value)
     end
 
+    # Get the value for the given key
+    # When the key does not exist, it returns empty string 
+    #
+    # @param [String] key
+    # @return [Value] value of the given key
     def get(key)
       key_struct = @key_dir[key]
       return '' if key_struct.nil?
@@ -33,6 +45,10 @@ module Bitcask
       value
     end
 
+    # Sets a new key value pair
+    #
+    # @param [String, String] key and value
+    # @return [nil]
     def put(key, value)
       log_size, data = serialize(epoc: Time.now.to_i, key: key, value: value)
 
@@ -84,15 +100,12 @@ module Bitcask
         key_bytes = @db_fh.read(keysz)
         value_bytes = @db_fh.read(valuesz)
 
-        key_type = DATA_TYPE_LOOK_UP[key_type]
-        value_type = DATA_TYPE_LOOK_UP[value_type]
-
         key = unpack(key_bytes, key_type)
         value = unpack(value_bytes, value_type)
 
         crc = crc_and_header_bytes[..crc32_offset - 1]
-        raise StandardError, 'file corrupted' unless validate_crc32(desearlize_crc32(crc),
-                                                                    header_bytes + key_bytes + value_bytes)
+        raise StandardError, 'file corrupted' unless crc32_valid?(desearlize_crc32(crc),
+                                                                  header_bytes + key_bytes + value_bytes)
 
         log_size = crc32_header_offset + keysz + valuesz
         @key_dir[key] = OpenStruct.new(write_pos: @write_pos, log_size: log_size, key: key)

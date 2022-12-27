@@ -94,7 +94,7 @@ RSpec.describe Bitcask::Serializer do
     let(:value) { 'One Piece' }
     let(:serialized_header_data) do
       OpenStruct.new(raw: "\xF5\xC1\xA9c\n\x00\x00\x00\x14\x00\x00\x00\x01\x00\x01\x00", epoc: 1_672_069_621, keysz: 10,
-                     valuesz: 20, value_type: 1, key_type: 1)
+                     valuesz: 20, value_type: :Integer, key_type: :Integer)
     end
 
     it 'returns epoc, keysz and valuesz' do
