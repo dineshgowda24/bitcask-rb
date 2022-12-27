@@ -53,7 +53,7 @@ db_store.store
 bundle exec rspec
 ```
 
-## Advanatages
+## Advantages
 
 - Simple yet powerful
 - Easy to use
