@@ -80,16 +80,47 @@ bundle exec rspec
 
 ```ruby
 ruby benchmark.rb
-Benchmarked with value_size of 69 bytes
+Benchmarked with value_size of 61 bytes
                                                          user     system      total        real
-DiskStore.put : 10k records                          0.131023   0.070932   0.201955 (  0.202188) s
-DiskStore.get : 10k records                          0.039780   0.033775   0.073555 (  0.073595) s
-DiskStore.put : 100k records                         2.287855   0.824356   3.112211 (  3.116531) s
-DiskStore.get : 100k records                         0.831596   0.371778   1.203374 (  1.204517) s
-DiskStore.put : 1M records                          46.158727  62.157752 108.316479 (111.450463) s
-DiskStore.get : 1M records                          10.434109  48.766160  59.200269 ( 68.947144) s
-avg_put:                                             0.000044   0.000057   0.000101 (  0.000103) s
-avg_get:                                             0.000010   0.000044   0.000054 (  0.000063) s
+DiskStore.put : 10k records                          0.027083   0.018129   0.045212 (  0.045279)
+DiskStore.get : 10k records                          0.030118   0.008643   0.038761 (  0.038883)
+DiskStore.put : 100k records                         0.375524   0.185587   0.561111 (  0.563386)
+DiskStore.get : 100k records                         0.322530   0.098692   0.421222 (  0.422358)
+DiskStore.put : 1M records                           4.616699   2.148791   6.765490 (  6.807430)
+DiskStore.get : 1M records                           3.629900   1.075376   4.705276 (  4.715082)
+avg_put:                                             0.000005   0.000002   0.000007 (  0.000007)
+avg_get:                                             0.000004   0.000001   0.000005 (  0.000005)
+```
+
+### Iterations Per Second
+
+```ruby
+Warming up --------------------------------------
+DiskStore.put : 100 records with data size: 674 Bytes
+                       146.000  i/100ms
+DiskStore.get : 100 records, value size: 674 Bytes
+                         2.246k i/100ms
+DiskStore.put : 100 records, value size: 6 Kb
+                        19.000  i/100ms
+DiskStore.get : 100 records, value size: 6 Kb
+                         2.066k i/100ms
+DiskStore.put : 100 records, value size: 660 Kb
+                         1.000  i/100ms
+DiskStore.get : 100 records, value size: 660 Kb
+                       143.000  i/100ms
+Calculating -------------------------------------
+DiskStore.put : 100 records with data size: 674 Bytes
+                          1.522k (±17.1%) i/s -      7.300k in   5.048182s
+DiskStore.get : 100 records, value size: 674 Bytes
+                         23.946k (± 5.5%) i/s -    121.284k in   5.079779s
+DiskStore.put : 100 records, value size: 6 Kb
+                        689.428  (±53.2%) i/s -      1.729k in   5.240029s
+DiskStore.get : 100 records, value size: 6 Kb
+                         20.806k (± 5.6%) i/s -    105.366k in   5.079364s
+DiskStore.put : 100 records, value size: 660 Kb
+                          4.419  (± 0.0%) i/s -     23.000  in   5.207703s
+DiskStore.get : 100 records, value size: 660 Kb
+                          3.411k (±40.8%) i/s -      8.437k in   5.245820s
 ```
 
 ## Contributing

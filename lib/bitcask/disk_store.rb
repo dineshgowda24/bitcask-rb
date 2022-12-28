@@ -30,7 +30,7 @@ module Bitcask
     end
 
     # Get the value for the given key
-    # When the key does not exist, it returns empty string 
+    # When the key does not exist, it returns empty string
     #
     # @param [String] key
     # @return [Value] value of the given key
@@ -38,8 +38,8 @@ module Bitcask
       key_struct = @key_dir[key]
       return '' if key_struct.nil?
 
-      @db_fh.seek(key_struct.write_pos)
-      raw = @db_fh.read(key_struct.log_size)
+      @db_fh.seek(key_struct[:write_pos])
+      raw = @db_fh.read(key_struct[:log_size])
       epoc, key, value = deserialize(raw)
 
       value
@@ -88,7 +88,7 @@ module Bitcask
     end
 
     def key_struct(write_pos, log_size, key)
-      OpenStruct.new(write_pos: write_pos, log_size: log_size, key: key)
+      { write_pos: write_pos, log_size: log_size, key: key }
     end
 
     def init_key_dir
@@ -108,7 +108,7 @@ module Bitcask
                                                                   header_bytes + key_bytes + value_bytes)
 
         log_size = crc32_header_offset + keysz + valuesz
-        @key_dir[key] = OpenStruct.new(write_pos: @write_pos, log_size: log_size, key: key)
+        @key_dir[key] = key_struct( @write_pos, log_size, key)
         incr_write_pos(log_size)
       end
     end
