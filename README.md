@@ -81,48 +81,47 @@ bundle exec rspec
 ### CPU Cycles
 
 ```ruby
-ruby benchmark.rb
-Benchmarked with value_size of 61 bytes
+Benchmarked with value_size of 78 bytes
                                                          user     system      total        real
-DiskStore.put : 10k records                          0.027083   0.018129   0.045212 (  0.045279)
-DiskStore.get : 10k records                          0.030118   0.008643   0.038761 (  0.038883)
-DiskStore.put : 100k records                         0.375524   0.185587   0.561111 (  0.563386)
-DiskStore.get : 100k records                         0.322530   0.098692   0.421222 (  0.422358)
-DiskStore.put : 1M records                           4.616699   2.148791   6.765490 (  6.807430)
-DiskStore.get : 1M records                           3.629900   1.075376   4.705276 (  4.715082)
+DiskStore.put : 10k records                          0.026963   0.018983   0.045946 (  0.046078)
+DiskStore.get : 10k records                          0.031211   0.009727   0.040938 (  0.041154)
+DiskStore.put : 100k records                         0.367399   0.196536   0.563935 (  0.566659)
+DiskStore.get : 100k records                         0.313556   0.102338   0.415894 (  0.416280)
+DiskStore.put : 1M records                           4.649307   2.209731   6.859038 (  6.887667)
+DiskStore.get : 1M records                           3.357120   1.047637   4.404757 (  4.409732)
 avg_put:                                             0.000005   0.000002   0.000007 (  0.000007)
-avg_get:                                             0.000004   0.000001   0.000005 (  0.000005)
+avg_get:                                             0.000003   0.000001   0.000004 (  0.000004)
 ```
 
 ### Iterations Per Second
 
 ```ruby
 Warming up --------------------------------------
-DiskStore.put : 100 records with data size: 686 Bytes
-                       152.000  i/100ms
-DiskStore.get : 100 records, value size: 686 Bytes
-                         2.408k i/100ms
+DiskStore.put : 100 records with data size: 702 Bytes
+                       149.000  i/100ms
+DiskStore.get : 100 records, value size: 702 Bytes
+                         2.389k i/100ms
 DiskStore.put : 100 records, value size: 6 Kb
-                        19.000  i/100ms
+                        22.000  i/100ms
 DiskStore.get : 100 records, value size: 6 Kb
-                         2.111k i/100ms
+                         2.098k i/100ms
 DiskStore.put : 100 records, value size: 660 Kb
                          1.000  i/100ms
 DiskStore.get : 100 records, value size: 660 Kb
-                       151.000  i/100ms
+                       148.000  i/100ms
 Calculating -------------------------------------
-DiskStore.put : 100 records with data size: 686 Bytes
-                          1.556k (±15.9%) i/s -      7.600k in   5.109423s
-DiskStore.get : 100 records, value size: 686 Bytes
-                         24.139k (± 3.5%) i/s -    122.808k in   5.093243s
+DiskStore.put : 100 records with data size: 702 Bytes
+                          1.552k (±15.7%) i/s -      7.450k in   5.008519s
+DiskStore.get : 100 records, value size: 702 Bytes
+                         24.100k (± 3.7%) i/s -    121.839k in   5.062195s
 DiskStore.put : 100 records, value size: 6 Kb
-                        698.038  (±53.0%) i/s -      1.729k in   5.071598s
+                        655.280  (±53.4%) i/s -      1.716k in   5.272456s
 DiskStore.get : 100 records, value size: 6 Kb
-                         21.292k (± 5.5%) i/s -    107.661k in   5.070935s
+                         19.883k (± 7.1%) i/s -    100.704k in   5.090910s
 DiskStore.put : 100 records, value size: 660 Kb
-                          4.655  (± 0.0%) i/s -     24.000  in   5.178317s
+                          4.479  (± 0.0%) i/s -     23.000  in   5.166651s
 DiskStore.get : 100 records, value size: 660 Kb
-                          3.218k (±44.8%) i/s -      7.852k in   5.091646s
+                          3.286k (±39.4%) i/s -      8.140k in   5.272424s
 ```
 
 ## Contributing
