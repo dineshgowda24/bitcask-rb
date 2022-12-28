@@ -4,7 +4,6 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-gem 'ostruct', '~> 0.5.5'
 gem 'zlib', '~> 3.0'
 
 group :development, :test do
