@@ -98,62 +98,31 @@ avg_get:                                             0.000004   0.000001   0.000
 
 ```ruby
 Warming up --------------------------------------
-DiskStore.put : 100 records with data size: 674 Bytes
-                       146.000  i/100ms
-DiskStore.get : 100 records, value size: 674 Bytes
-                         2.246k i/100ms
+DiskStore.put : 100 records with data size: 686 Bytes
+                       152.000  i/100ms
+DiskStore.get : 100 records, value size: 686 Bytes
+                         2.408k i/100ms
 DiskStore.put : 100 records, value size: 6 Kb
                         19.000  i/100ms
 DiskStore.get : 100 records, value size: 6 Kb
-                         2.066k i/100ms
+                         2.111k i/100ms
 DiskStore.put : 100 records, value size: 660 Kb
                          1.000  i/100ms
 DiskStore.get : 100 records, value size: 660 Kb
-                       143.000  i/100ms
+                       151.000  i/100ms
 Calculating -------------------------------------
-DiskStore.put : 100 records with data size: 674 Bytes
-                          1.522k (±17.1%) i/s -      7.300k in   5.048182s
-DiskStore.get : 100 records, value size: 674 Bytes
-                         23.946k (± 5.5%) i/s -    121.284k in   5.079779s
+DiskStore.put : 100 records with data size: 686 Bytes
+                          1.556k (±15.9%) i/s -      7.600k in   5.109423s
+DiskStore.get : 100 records, value size: 686 Bytes
+                         24.139k (± 3.5%) i/s -    122.808k in   5.093243s
 DiskStore.put : 100 records, value size: 6 Kb
-                        689.428  (±53.2%) i/s -      1.729k in   5.240029s
+                        698.038  (±53.0%) i/s -      1.729k in   5.071598s
 DiskStore.get : 100 records, value size: 6 Kb
-                         20.806k (± 5.6%) i/s -    105.366k in   5.079364s
+                         21.292k (± 5.5%) i/s -    107.661k in   5.070935s
 DiskStore.put : 100 records, value size: 660 Kb
-                          4.419  (± 0.0%) i/s -     23.000  in   5.207703s
+                          4.655  (± 0.0%) i/s -     24.000  in   5.178317s
 DiskStore.get : 100 records, value size: 660 Kb
-                          3.411k (±40.8%) i/s -      8.437k in   5.245820s
-```
-
-### Iterations Per Second
-
-```ruby
-Warming up --------------------------------------
-DiskStore.put : 100 records with data size: 682 Bytes
-                        55.000  i/100ms
-DiskStore.get : 100 records, value size: 682 Bytes
-                         2.773k i/100ms
-DiskStore.put : 100 records, value size: 6 Kb
-                        44.000  i/100ms
-DiskStore.get : 100 records, value size: 6 Kb
-                         2.429k i/100ms
-DiskStore.put : 100 records, value size: 660 Kb
-                         1.000  i/100ms
-DiskStore.get : 100 records, value size: 660 Kb
-                       439.000  i/100ms
-Calculating -------------------------------------
-DiskStore.put : 100 records with data size: 682 Bytes
-                        542.145  (± 7.7%) i/s -      2.750k in   5.099871s
-DiskStore.get : 100 records, value size: 682 Bytes
-                         28.204k (± 0.9%) i/s -    141.423k in   5.014625s
-DiskStore.put : 100 records, value size: 6 Kb
-                        443.384  (± 3.8%) i/s -      2.244k in   5.069211s
-DiskStore.get : 100 records, value size: 6 Kb
-                         23.966k (± 1.6%) i/s -    121.450k in   5.068815s
-DiskStore.put : 100 records, value size: 660 Kb
-                         20.860  (± 9.6%) i/s -    104.000  in   5.027162s
-DiskStore.get : 100 records, value size: 660 Kb
-                          4.705k (±16.9%) i/s -     23.267k in   5.090618s
+                          3.218k (±44.8%) i/s -      7.852k in   5.091646s
 ```
 
 ## Contributing
