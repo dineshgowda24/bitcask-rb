@@ -78,6 +78,8 @@ bundle exec rspec
 
 ## Benchmarks
 
+### CPU Cycles
+
 ```ruby
 ruby benchmark.rb
 Benchmarked with value_size of 69 bytes
@@ -90,6 +92,37 @@ DiskStore.put : 1M records                          46.158727  62.157752 108.316
 DiskStore.get : 1M records                          10.434109  48.766160  59.200269 ( 68.947144) s
 avg_put:                                             0.000044   0.000057   0.000101 (  0.000103) s
 avg_get:                                             0.000010   0.000044   0.000054 (  0.000063) s
+```
+
+### Iterations Per Second
+
+```ruby
+Warming up --------------------------------------
+DiskStore.put : 100 records with data size: 682 Bytes
+                        55.000  i/100ms
+DiskStore.get : 100 records, value size: 682 Bytes
+                         2.773k i/100ms
+DiskStore.put : 100 records, value size: 6 Kb
+                        44.000  i/100ms
+DiskStore.get : 100 records, value size: 6 Kb
+                         2.429k i/100ms
+DiskStore.put : 100 records, value size: 660 Kb
+                         1.000  i/100ms
+DiskStore.get : 100 records, value size: 660 Kb
+                       439.000  i/100ms
+Calculating -------------------------------------
+DiskStore.put : 100 records with data size: 682 Bytes
+                        542.145  (± 7.7%) i/s -      2.750k in   5.099871s
+DiskStore.get : 100 records, value size: 682 Bytes
+                         28.204k (± 0.9%) i/s -    141.423k in   5.014625s
+DiskStore.put : 100 records, value size: 6 Kb
+                        443.384  (± 3.8%) i/s -      2.244k in   5.069211s
+DiskStore.get : 100 records, value size: 6 Kb
+                         23.966k (± 1.6%) i/s -    121.450k in   5.068815s
+DiskStore.put : 100 records, value size: 660 Kb
+                         20.860  (± 9.6%) i/s -    104.000  in   5.027162s
+DiskStore.get : 100 records, value size: 660 Kb
+                          4.705k (±16.9%) i/s -     23.267k in   5.090618s
 ```
 
 ## Contributing

@@ -8,6 +8,7 @@ gem 'ostruct', '~> 0.5.5'
 gem 'zlib', '~> 3.0'
 
 group :development, :test do
+  gem 'benchmark-ips', '~> 2.10'
   gem 'faker', '~> 3.1'
   gem 'rspec', '~> 3.12'
 end
