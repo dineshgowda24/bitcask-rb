@@ -39,8 +39,7 @@ module Bitcask
       return '' if key_struct.nil?
 
       @db_fh.seek(key_struct[:write_pos])
-      raw = @db_fh.read(key_struct[:log_size])
-      epoc, key, value = deserialize(raw)
+      epoc, key, value = deserialize(@db_fh.read(key_struct[:log_size]))
 
       value
     end
@@ -108,7 +107,7 @@ module Bitcask
                                                                   header_bytes + key_bytes + value_bytes)
 
         log_size = crc32_header_offset + keysz + valuesz
-        @key_dir[key] = key_struct( @write_pos, log_size, key)
+        @key_dir[key] = key_struct(@write_pos, log_size, key)
         incr_write_pos(log_size)
       end
     end

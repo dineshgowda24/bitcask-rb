@@ -64,21 +64,13 @@ module Bitcask
     # @param [String] byte string to deserialize
     # @return [Integer, String|Float|Integer, String|Float|Integer] Epoc, Key, Value
     def deserialize(data)
-      header_and_data_bytes = data[crc32_offset..]
-      crc_bytes = data[..crc32_offset - 1]
+      return 0, '', '' unless crc32_valid?(desearlize_crc32(data[..crc32_offset - 1]), data[crc32_offset..])
 
-      return 0, '', '' unless crc32_valid?(desearlize_crc32(crc_bytes), header_and_data_bytes)
-
-      header_bytes = data[crc32_offset..crc32_header_offset - 1]
-      epoc, keysz, valuesz, key_type, value_type = deserialize_header(header_bytes)
-
+      epoc, keysz, valuesz, key_type, value_type = deserialize_header(data[crc32_offset..crc32_header_offset - 1])
       key_bytes = data[crc32_header_offset..crc32_header_offset + keysz - 1]
       value_bytes = data[crc32_header_offset + keysz..]
 
-      key = unpack(key_bytes, key_type)
-      value = unpack(value_bytes, value_type)
-
-      [epoc, key, value]
+      [epoc, unpack(key_bytes, key_type), unpack(value_bytes, value_type)]
     end
 
     # Serializes header
